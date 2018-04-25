@@ -40,4 +40,19 @@ describe('nix', () => {
       },
     });
   });
+  it('extend operator', () => {
+    const nix = new Nix({
+      $starts_with: val => ({ $regex: new RegExp(`^${val}`, 'gi') }),
+    });
+    const r = nix.parse({
+      name: 'taind',
+      name_starts_with: 'tai',
+    });
+    expect(r).to.deep.equal({
+      name: {
+        $eq: 'taind',
+        $regex: /^tai/gi,
+      },
+    });
+  });
 });
