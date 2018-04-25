@@ -1,3 +1,3 @@
-import parse from './src/parse';
+import Nix from './src/nix';
 
-export default parse;
+export default Nix;
