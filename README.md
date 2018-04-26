@@ -23,7 +23,7 @@ Nix converts your `filter` query to
   {
     id: { $and: [{ $eq: <value> }] },
     username: { $and: [{ $eq: <value> }] },
-    age: { $and: [{ $gt: <value> }, { $lt: <value> }] },
+    age: { $and: [{ $gt: <value> }, { $lt: <value> }, { $eq: <value> }] },
   }
 ```
 check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae for standard filter.
