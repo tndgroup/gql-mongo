@@ -21,12 +21,9 @@ let define your simple query:
 Nix converts your `filter` query to 
 ```javascript
   {
-    id: <value>,
-    username: <value>,
-    age: {
-      $gt: <value>,
-      $lt: <value>
-    }
+    id: { $and: [{ $eq: <value> }] },
+    username: { $and: [{ $eq: <value> }] },
+    age: { $and: [{ $gt: <value> }, { $lt: <value> }] },
   }
 ```
 check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae for standard filter.

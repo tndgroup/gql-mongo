@@ -29,11 +29,8 @@ class Nix {
           if (!this.operatorBuilder[mongoOperator]) {
             throw new Error(`${mongoOperator} does not supported`);
           }
-          if (!query[nameWithoutOperator]) query[nameWithoutOperator] = {};
-          Object.assign(
-            query[nameWithoutOperator],
-            this.operatorBuilder[mongoOperator](value),
-          );
+          if (!query[nameWithoutOperator]) query[nameWithoutOperator] = { $and: [] };
+          query[nameWithoutOperator].$and.push(this.operatorBuilder[mongoOperator](value));
         }
       }
     });

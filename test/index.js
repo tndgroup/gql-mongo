@@ -13,9 +13,13 @@ describe('nix', () => {
       OR: [{ age_gte: 10, age_lte: 20 }],
     });
     expect(r).to.deep.equal({
-      name: { $eq: 'taind' },
-      $and: [{ age: { $gte: 10, $lte: 20 } }],
-      $or: [{ age: { $gte: 10, $lte: 20 } }],
+      name: {
+        $and: [
+          { $eq: 'taind' },
+        ],
+      },
+      $and: [{ age: { $and: [{ $gte: 10 }, { $lte: 20 }] } }],
+      $or: [{ age: { $and: [{ $gte: 10 }, { $lte: 20 }] } }],
     });
   });
   it('throw error', () => {
@@ -32,11 +36,15 @@ describe('nix', () => {
     const r = nix.parse({ name: 'taind', age: 10, age_gte: 5 });
     expect(r).to.deep.equal({
       name: {
-        $eq: 'taind',
+        $and: [
+          { $eq: 'taind' },
+        ],
       },
       age: {
-        $eq: 10,
-        $gte: 5,
+        $and: [
+          { $eq: 10 },
+          { $gte: 5 },
+        ],
       },
     });
   });
@@ -50,8 +58,10 @@ describe('nix', () => {
     });
     expect(r).to.deep.equal({
       name: {
-        $eq: 'taind',
-        $regex: /^tai/gi,
+        $and: [
+          { $eq: 'taind' },
+          { $regex: /^tai/gi },
+        ],
       },
     });
   });
