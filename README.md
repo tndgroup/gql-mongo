@@ -36,7 +36,7 @@ check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-ap
 
 Use in your resolver `users.js`
 ```javascript
-import Nix from 'nix'
+import Nix from 'nix-converter'
 const nix = new Nix()
 
 export default ({_, { filter = {}, orderBy, skip, limit }, { Users }}) => {
@@ -60,7 +60,7 @@ for exmaple, you want to search username which starts with `taind`. Firstly, add
 ```
 then in resolver `users.js`
 ```javascript
-import Nix from 'nix'
+import Nix from 'nix-converter'
 const nix = new Nix({
   $starts_with: val => ({$regex: new RegExp(`^${val}`, 'gi')})
 })
