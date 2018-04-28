@@ -115,3 +115,5 @@ GqlField.toString = (fieldWithType = {}) => Object
 
 exports.GqlMongo = GqlMongo;
 exports.GqlField = GqlField;
+exports.fieldBuiler = fields;
+exports.operatorBuilder = builders;
