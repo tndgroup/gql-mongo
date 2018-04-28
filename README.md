@@ -36,7 +36,7 @@ check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-ap
 
 Use in your resolver `users.js`
 ```javascript
-import GqlMongo from 'qgl-mongo'
+import { GqlMongo } from 'qgl-mongo'
 const gqlMongo = new GqlMongo()
 
 export default ({_, { filter = {}, orderBy, skip, limit }, { Users }}) => {
@@ -60,8 +60,19 @@ for exmaple, you want to search username which starts with `taind`. Firstly, add
 ```
 then in resolver `users.js`
 ```javascript
-import GqlMongo from 'qgl-mongo'
+import { GqlMongo } from 'qgl-mongo'
 const gqlMongo = new GqlMongo({
   $starts_with: val => ({$regex: new RegExp(`^${val}`, 'gi')})
 })
 ```
+## Additional Features
+GqlMongo generate query fields:
+
+```gql
+import { GqlField } from 'gql-mongo'
+const gqlMongo = new GqlField()
+const r = gqlMongo.parse({ age: 'Int'}) 
+// { age: 'Int', age_ne: 'Int', age_in: '[Int!]', age_nin: '[Int!]', age_lt: 'Int', age_lte: 'Int', age_gt: 'Int', age_gte: 'Int' }
+
+```
+
