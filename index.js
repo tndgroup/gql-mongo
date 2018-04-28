@@ -1,3 +1,7 @@
 import GqlMongo from './src/gqlMongo';
+import GqlField from './src/gqlField';
 
-export default GqlMongo;
+export {
+  GqlMongo,
+  GqlField,
+};

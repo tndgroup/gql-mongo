@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import GqlMongo from '../index';
+import { GqlMongo } from '../index';
 
 describe('gql-mongo', () => {
   it('should be ok', () => {

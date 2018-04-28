@@ -3,6 +3,7 @@ import operatorBuilder from './operatorBuilder';
 class GqlMongo {
   constructor(extendOperatorBuiler = {}) {
     this.operatorBuilder = Object.assign(
+      {},
       operatorBuilder,
       extendOperatorBuiler,
     );
