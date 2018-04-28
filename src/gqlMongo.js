@@ -46,19 +46,6 @@ class GqlMongo {
         return { [nameWithoutOperator]: -1 };
     };
   }
-  parse(input) {
-    let query = {};
-    let sortBy = {};
-    if (typeof input === 'string') {
-      sortBy = this.parseSort(input);
-    } else {
-      query = this.parseQuery(input);
-    }
-    return {
-      toQuery: () => query,
-      toSortBy: () => sortBy,
-    };
-  }
 }
 
 export default GqlMongo;

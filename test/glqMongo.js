@@ -7,12 +7,12 @@ describe('gql-mongo', () => {
   });
   it('AND/OR', () => {
     const gqlMongo = new GqlMongo();
-    const r = gqlMongo.parse({
+    const r = gqlMongo.parseQuery({
       name: 'taind',
       AND: [{ age_gte: 10, age_lte: 20 }],
       OR: [{ age_gte: 10, age_lte: 20 }],
     });
-    expect(r.toQuery()).to.deep.equal({
+    expect(r).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         {
@@ -31,7 +31,7 @@ describe('gql-mongo', () => {
   it('throw error', () => {
     const gqlMongo = new GqlMongo();
     try {
-      gqlMongo.parse({ name: 'taind', age: 10, age_starts_with: 5 });
+      gqlMongo.parseQuery({ name: 'taind', age: 10, age_starts_with: 5 });
       expect(true).to.equal(false);
     } catch (e) {
       expect(true).to.equal(true);
@@ -39,8 +39,8 @@ describe('gql-mongo', () => {
   });
   it('one level', () => {
     const gqlMongo = new GqlMongo();
-    const r = gqlMongo.parse({ name: 'taind', age: 10, age_gte: 5 });
-    expect(r.toQuery()).to.deep.equal({
+    const r = gqlMongo.parseQuery({ name: 'taind', age: 10, age_gte: 5 });
+    expect(r).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         { age: { $eq: 10 } },
@@ -52,11 +52,11 @@ describe('gql-mongo', () => {
     const gqlMongo = new GqlMongo({
       $starts_with: val => ({ $regex: new RegExp(`^${val}`, 'gi') }),
     });
-    const r = gqlMongo.parse({
+    const r = gqlMongo.parseQuery({
       name: 'taind',
       name_starts_with: 'tai',
     });
-    expect(r.toQuery()).to.deep.equal({
+    expect(r).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         { name: { $regex: /^tai/gi } },
@@ -65,9 +65,9 @@ describe('gql-mongo', () => {
   });
   it('parseSort', () => {
     const gqlMongo = new GqlMongo();
-    const r = gqlMongo.parse('id_ASC');
-    expect(r.toSortBy()).to.deep.equal({ id: 1 });
-    const l = gqlMongo.parse('id_DESC');
-    expect(l.toSortBy()).to.deep.equal({ id: -1 });
+    const r = gqlMongo.parseSort('id_ASC');
+    expect(r).to.deep.equal({ id: 1 });
+    const l = gqlMongo.parseSort('id_DESC');
+    expect(l).to.deep.equal({ id: -1 });
   })
 });
