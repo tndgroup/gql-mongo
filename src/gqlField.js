@@ -26,4 +26,7 @@ class GqlField {
   }
 }
 
+GqlField.toString = (fieldWithType = {}) => Object
+  .entries(fieldWithType).map(([name, type]) =>`${name}: ${type}`).join('\n');
+
 export default GqlField;
