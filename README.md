@@ -18,7 +18,7 @@ let define your simple query:
     users: (filter: UserFilter!, sortBy: UserSortBy!, limit: Integer!, skip: Integer!): UserConnection!
   }
 ```
-Nix converts your `filter` query to 
+GqlMongo converts your `filter` query to 
 ```javascript
   {
     id: { $and: [{ $eq: <value> }] },
