@@ -1,6 +1,6 @@
 {
   "name": "gql-mongo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./build/bundle.js",
   "license": "MIT",
   "scripts": {
