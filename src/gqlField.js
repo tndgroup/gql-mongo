@@ -22,11 +22,11 @@ class GqlField {
         });
       });
     });
-    return query;
+    return {
+      toObject: () => query,
+      toString: () => Object.entries(query).map(([name, type]) => `${name}: ${type}`).join('\n'),
+    };
   }
 }
-
-GqlField.toString = (fieldWithType = {}) => Object
-  .entries(fieldWithType).map(([name, type]) =>`${name}: ${type}`).join('\n');
 
 export default GqlField;

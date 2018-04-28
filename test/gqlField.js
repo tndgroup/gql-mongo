@@ -12,7 +12,7 @@ describe('GqlField', () => {
     const r = gqlField.parse({
       createdAt: 'Date',
     });
-    expect(r).to.deep.equal({
+    expect(r.toObject()).to.deep.equal({
       createdAt: 'Date',
       createdAt_ne: 'Date',
       createdAt_in: '[Date!]',
@@ -24,7 +24,7 @@ describe('GqlField', () => {
       age: 'Float',
       yob: 'Int',
     });
-    expect(r).to.deep.equal({
+    expect(r.toObject()).to.deep.equal({
       age: 'Float',
       age_ne: 'Float',
       age_in: '[Float!]',
