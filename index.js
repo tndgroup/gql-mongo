@@ -1,3 +1,3 @@
-import Nix from './src/nix';
+import GqlMongo from './src/gqlMongo';
 
-export default Nix;
+export default GqlMongo;

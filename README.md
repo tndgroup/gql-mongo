@@ -1,6 +1,6 @@
-# What is NIX
+# What is gql-mongo 
 
-Nix is a simple converter which converts your graphql query to mongodb query
+gql-mongo is a simple converter which converts your `graphql` query to `mongodb` query
 
 ## Get Started 
 
@@ -36,11 +36,11 @@ check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-ap
 
 Use in your resolver `users.js`
 ```javascript
-import Nix from 'nix-converter'
-const nix = new Nix()
+import GqlMongo from 'qgl-mongo'
+const gqlMongo = new GqlMongo()
 
 export default ({_, { filter = {}, orderBy, skip, limit }, { Users }}) => {
-  const query = nix.parse(filter);
+  const query = gqlMongo.parse(filter);
   const users = Users.find(query);
   // handle skip limit
 }
@@ -60,8 +60,8 @@ for exmaple, you want to search username which starts with `taind`. Firstly, add
 ```
 then in resolver `users.js`
 ```javascript
-import Nix from 'nix-converter'
-const nix = new Nix({
+import GqlMongo from 'qgl-mongo'
+const gqlMongo = new GqlMongo({
   $starts_with: val => ({$regex: new RegExp(`^${val}`, 'gi')})
 })
 ```

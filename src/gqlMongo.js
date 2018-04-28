@@ -1,6 +1,6 @@
 import operatorBuilder from './operatorBuilder';
 
-class Nix {
+class GqlMongo {
   constructor(extendOperatorBuiler = {}) {
     this.operatorBuilder = Object.assign(
       operatorBuilder,
@@ -38,4 +38,4 @@ class Nix {
   }
 }
 
-export default Nix;
+export default GqlMongo;

@@ -1,13 +1,13 @@
 import { expect } from 'chai';
-import Nix from '../index';
+import GqlMongo from '../index';
 
-describe('nix', () => {
+describe('gql-mongo', () => {
   it('should be ok', () => {
     expect(1).to.equal(1)
   });
   it('AND/OR', () => {
-    const nix = new Nix();
-    const r = nix.parse({
+    const gqlMongo = new GqlMongo();
+    const r = gqlMongo.parse({
       name: 'taind',
       AND: [{ age_gte: 10, age_lte: 20 }],
       OR: [{ age_gte: 10, age_lte: 20 }],
@@ -23,17 +23,17 @@ describe('nix', () => {
     });
   });
   it('throw error', () => {
-    const nix = new Nix();
+    const gqlMongo = new GqlMongo();
     try {
-      nix.parse({ name: 'taind', age: 10, age_starts_with: 5 });
+      gqlMongo.parse({ name: 'taind', age: 10, age_starts_with: 5 });
       expect(true).to.equal(false);
     } catch (e) {
       expect(true).to.equal(true);
     }
   });
   it('one level', () => {
-    const nix = new Nix();
-    const r = nix.parse({ name: 'taind', age: 10, age_gte: 5 });
+    const gqlMongo = new GqlMongo();
+    const r = gqlMongo.parse({ name: 'taind', age: 10, age_gte: 5 });
     expect(r).to.deep.equal({
       name: {
         $and: [
@@ -49,10 +49,10 @@ describe('nix', () => {
     });
   });
   it('extend operator', () => {
-    const nix = new Nix({
+    const gqlMongo = new GqlMongo({
       $starts_with: val => ({ $regex: new RegExp(`^${val}`, 'gi') }),
     });
-    const r = nix.parse({
+    const r = gqlMongo.parse({
       name: 'taind',
       name_starts_with: 'tai',
     });
