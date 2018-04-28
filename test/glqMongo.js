@@ -13,13 +13,19 @@ describe('gql-mongo', () => {
       OR: [{ age_gte: 10, age_lte: 20 }],
     });
     expect(r).to.deep.equal({
-      name: {
-        $and: [
-          { $eq: 'taind' },
-        ],
-      },
-      $and: [{ age: { $and: [{ $gte: 10 }, { $lte: 20 }] } }],
-      $or: [{ age: { $and: [{ $gte: 10 }, { $lte: 20 }] } }],
+      $and: [
+        { name: { $eq: 'taind' } },
+        {
+          $and: [
+            { $and: [{ age: { $gte: 10 } }, { age: { $lte: 20 } }] },
+          ],
+        },
+        {
+          $or: [
+            { $and: [{ age: { $gte: 10 } }, { age: { $lte: 20 } }] },
+          ],
+        },
+      ],
     });
   });
   it('throw error', () => {
@@ -35,17 +41,11 @@ describe('gql-mongo', () => {
     const gqlMongo = new GqlMongo();
     const r = gqlMongo.parse({ name: 'taind', age: 10, age_gte: 5 });
     expect(r).to.deep.equal({
-      name: {
-        $and: [
-          { $eq: 'taind' },
-        ],
-      },
-      age: {
-        $and: [
-          { $eq: 10 },
-          { $gte: 5 },
-        ],
-      },
+      $and: [
+        { name: { $eq: 'taind' } },
+        { age: { $eq: 10 } },
+        { age: { $gte: 5 } },
+      ],
     });
   });
   it('extend operator', () => {
@@ -57,12 +57,10 @@ describe('gql-mongo', () => {
       name_starts_with: 'tai',
     });
     expect(r).to.deep.equal({
-      name: {
-        $and: [
-          { $eq: 'taind' },
-          { $regex: /^tai/gi },
-        ],
-      },
+      $and: [
+        { name: { $eq: 'taind' } },
+        { name: { $regex: /^tai/gi } },
+      ],
     });
   });
 });

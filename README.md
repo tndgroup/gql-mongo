@@ -21,9 +21,13 @@ let define your simple query:
 GqlMongo converts your `filter` query to 
 ```javascript
   {
-    id: { $and: [{ $eq: <value> }] },
-    username: { $and: [{ $eq: <value> }] },
-    age: { $and: [{ $gt: <value> }, { $lt: <value> }, { $eq: <value> }] },
+    $and: [
+      { id: { $eq: <value> } },
+      { username: { $eq: <value> }},
+      { age: {$eq: <value>} },
+      { age: {$gt: <value>} },
+      { age: {$lt: <value>} }
+    ]
   }
 ```
 check `MetaFilter` of https://www.graph.cool/docs/reference/graphql-api/query-api-nia9nushae for standard filter.

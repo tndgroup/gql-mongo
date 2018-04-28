@@ -9,17 +9,17 @@ class GqlMongo {
     );
   }
   parse(filter = {}) {
-    const query = {};
+    const query = { };
     Object.entries(filter).forEach(([name, value]) => {
       switch (name) {
         case 'AND': {
-          if (!query.$and) query.$and = [];
-          value.forEach(v => query.$and.push(this.parse(v)));
+          const $and = value.map(v => this.parse(v));
+          query.$and.push({ $and });
           break;
         }
         case 'OR': {
-          if (!query.$or) query.$or = [];
-          value.forEach(v => query.$or.push(this.parse(v)));
+          const $or = value.map(v => this.parse(v));
+          query.$and.push({ $or });
           break;
         }
         default: {
@@ -30,8 +30,8 @@ class GqlMongo {
           if (!this.operatorBuilder[mongoOperator]) {
             throw new Error(`${mongoOperator} does not supported`);
           }
-          if (!query[nameWithoutOperator]) query[nameWithoutOperator] = { $and: [] };
-          query[nameWithoutOperator].$and.push(this.operatorBuilder[mongoOperator](value));
+          if (!query.$and) query.$and = [];
+          query.$and.push({ [nameWithoutOperator]: this.operatorBuilder[mongoOperator](value) });
         }
       }
     });
