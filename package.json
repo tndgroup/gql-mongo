@@ -1,10 +1,11 @@
 {
   "name": "gql-mongo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./build/bundle.js",
   "license": "MIT",
   "scripts": {
-    "test": "mocha -r babel-register"
+    "test": "mocha -r babel-register",
+    "build": "rollup index.js --format cjs --file ./build/bundle.js"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -15,6 +16,7 @@
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.11.0",
-    "mocha": "^5.1.1"
+    "mocha": "^5.1.1",
+    "rollup": "^0.58.2"
   }
 }
