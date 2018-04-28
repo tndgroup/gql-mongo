@@ -1,5 +1,7 @@
 'use strict';
 
+Object.defineProperty(exports, '__esModule', { value: true });
+
 const simpleBuiler = operator => value => ({ [operator]: value });
 const builders = {};
 const mongoOperators = [
@@ -20,6 +22,7 @@ mongoOperators.forEach((m) => {
 class GqlMongo {
   constructor(extendOperatorBuiler = {}) {
     this.operatorBuilder = Object.assign(
+      {},
       builders,
       extendOperatorBuiler,
     );
@@ -55,4 +58,60 @@ class GqlMongo {
   }
 }
 
-module.exports = GqlMongo;
+const fields = {
+  Int: {
+    Int: ['', 'ne', 'lt', 'lte', 'gt', 'gte'],
+    '[Int!]': ['in', 'nin'],
+  },
+  Float: {
+    Float: ['', 'ne', 'lt', 'lte', 'gt', 'gte'],
+    '[Float!]': ['in', 'nin'],
+  },
+  Boolean: {
+    Boolean: ['', 'ne'],
+  },
+  String: {
+    String: ['', 'ne', 'lt', 'lte', 'gt', 'gte', 'regex'],
+    '[String!]': ['in', 'nin'],
+  },
+  ID: {
+    ID: ['', 'ne', 'lt', 'lte', 'gt', 'gte', 'regex'],
+    '[ID!]': ['in', 'nin'],
+  },
+  Enum: {
+    Enum: ['', 'ne'],
+    '[Enum!]': ['in', 'nin'],
+  },
+};
+
+class GqlField {
+  constructor(extendFieldBuilder = {}) {
+    this.fieldBuiler = Object.assign(
+      {},
+      fields,
+      extendFieldBuilder,
+    );
+  }
+  parse(fieldWithType = {}) {
+    const query = {};
+    const supportTypes = Object.keys(this.fieldBuiler);
+    Object.entries(fieldWithType).forEach(([name, type]) => {
+      if (!supportTypes.includes(type)) {
+        throw new Error(`type ${type} hasn't been supported yet`);
+      }
+      Object.entries(this.fieldBuiler[type]).forEach(([compoundType, operators]) => {
+        operators.forEach((operator) => {
+          const generatedName = operator ? `${name}_${operator}` : name;
+          query[generatedName] = compoundType;
+        });
+      });
+    });
+    return query;
+  }
+}
+
+GqlField.toString = (fieldWithType = {}) => Object
+  .entries(fieldWithType).map(([name, type]) =>`${name}: ${type}`).join('\n');
+
+exports.GqlMongo = GqlMongo;
+exports.GqlField = GqlField;
