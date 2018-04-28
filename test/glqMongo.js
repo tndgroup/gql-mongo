@@ -63,4 +63,11 @@ describe('gql-mongo', () => {
       ],
     });
   });
+  it('parseSort', () => {
+    const gqlMongo = new GqlMongo();
+    const r = gqlMongo.parse('id_ASC');
+    expect(r.toSortBy()).to.deep.equal({ id: 1 });
+    const l = gqlMongo.parse('id_DESC');
+    expect(l.toSortBy()).to.deep.equal({ id: -1 });
+  })
 });

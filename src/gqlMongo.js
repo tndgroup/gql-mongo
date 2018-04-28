@@ -37,10 +37,26 @@ class GqlMongo {
     });
     return query;
   }
-  parse(input = {}) {
-    const query = this.parseQuery(input);
+  parseSort(name = '') {
+    const [nameWithoutOperator, operator] = name.split('_');
+    switch (operator) {
+      case 'ASC':
+        return { [nameWithoutOperator]: 1 };
+      case 'DESC':
+        return { [nameWithoutOperator]: -1 };
+    };
+  }
+  parse(input) {
+    let query = {};
+    let sortBy = {};
+    if (typeof input === 'string') {
+      sortBy = this.parseSort(input);
+    } else {
+      query = this.parseQuery(input);
+    }
     return {
       toQuery: () => query,
+      toSortBy: () => sortBy,
     };
   }
 }
