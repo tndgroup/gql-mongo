@@ -8,17 +8,17 @@ class GqlMongo {
       extendOperatorBuiler,
     );
   }
-  parse(filter = {}) {
-    const query = { };
-    Object.entries(filter).forEach(([name, value]) => {
+  parseQuery(input = {}) {
+    const query = {};
+    Object.entries(input).forEach(([name, value]) => {
       switch (name) {
         case 'AND': {
-          const $and = value.map(v => this.parse(v));
+          const $and = value.map(v => this.parseQuery(v));
           query.$and.push({ $and });
           break;
         }
         case 'OR': {
-          const $or = value.map(v => this.parse(v));
+          const $or = value.map(v => this.parseQuery(v));
           query.$and.push({ $or });
           break;
         }
@@ -36,6 +36,12 @@ class GqlMongo {
       }
     });
     return query;
+  }
+  parse(input = {}) {
+    const query = this.parseQuery(input);
+    return {
+      toQuery: () => query,
+    };
   }
 }
 

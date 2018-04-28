@@ -12,7 +12,7 @@ describe('gql-mongo', () => {
       AND: [{ age_gte: 10, age_lte: 20 }],
       OR: [{ age_gte: 10, age_lte: 20 }],
     });
-    expect(r).to.deep.equal({
+    expect(r.toQuery()).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         {
@@ -40,7 +40,7 @@ describe('gql-mongo', () => {
   it('one level', () => {
     const gqlMongo = new GqlMongo();
     const r = gqlMongo.parse({ name: 'taind', age: 10, age_gte: 5 });
-    expect(r).to.deep.equal({
+    expect(r.toQuery()).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         { age: { $eq: 10 } },
@@ -56,7 +56,7 @@ describe('gql-mongo', () => {
       name: 'taind',
       name_starts_with: 'tai',
     });
-    expect(r).to.deep.equal({
+    expect(r.toQuery()).to.deep.equal({
       $and: [
         { name: { $eq: 'taind' } },
         { name: { $regex: /^tai/gi } },
